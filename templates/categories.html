@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+ 
+{% block title %}
+Категории
+{% endblock title %}
+ 
+{% block content %}
+<h1>Список категории</h1>
+
+<table>
+    {% for category in categories %}
+    <tr>
+        <td>
+            <a class = edit href="{% url 'category' category.id %}">{{ category.NameCategory }}</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

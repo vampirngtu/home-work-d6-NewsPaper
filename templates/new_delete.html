@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+ 
+{% block title %} Product list {% endblock title %}
+
+{% load custom_filters %}
+ 
+{% block content %}
+<h2>Вы действительно хотите удалить пост?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Удалить">
+</form> 
+<br>
+<h4> {{ new.title | truncatechars:25 | censor }} от {{ new.datatime | date:'d M Y' }} </h4>
+<p> {{ new.text | censor  }}</p>
+
+
+ 
+ 
+{% endblock content %}

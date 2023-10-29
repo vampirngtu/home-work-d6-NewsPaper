@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<h2><p align="center">{{ new.title | censor }} </p></h2>
+<p align="center"> автор: {{ new.author.userAuthor }} &nbsp;&nbsp;&nbsp;&nbsp; {{ new.datatime |date:'d-M-Y G:i' }} &nbsp;&nbsp;&nbsp;&nbsp;pейтинг статьи: {{ new.ratingPost}};&nbsp;&nbsp;&nbsp;&nbsp;
+    {% for category in new.category.filter %}
+        категория: {{ category }}
+    {% endfor %}
+</p>
+<hr>
+<p> {{ new.text | censor }}</p>
+
+
+{% endblock content %}

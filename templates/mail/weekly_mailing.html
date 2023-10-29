@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Новые статьи</h1>
+    {% for post in posts %}
+        <ol>
+            <li><a href="http://127.0.0.1:8000{% url 'new' post.id %}">{{post.title}}</a></li>
+        </ol>
+    {% endfor %}
+</body>
+</html>

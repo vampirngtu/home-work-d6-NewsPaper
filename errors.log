@@ -1,0 +1,23 @@
+2023-08-08 12:29:27,242 ERROR log Internal Server Error: /news/138/
+Traceback (most recent call last):
+  File "C:\Users\Home\Desktop\study\D\Homework_D7\NewsPaper\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\Desktop\study\D\Homework_D7\NewsPaper\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\Desktop\study\D\Homework_D7\NewsPaper\venv\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\Desktop\study\D\Homework_D7\NewsPaper\venv\Lib\site-packages\django\views\generic\base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\Desktop\study\D\Homework_D7\NewsPaper\venv\Lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+                  ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Home\Desktop\study\D\Homework_D7\NewsPaper\NEWSPAPER\news\views.py", line 37, in get_object
+    obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+          ^^^^^
+NameError: name 'cache' is not defined
+2023-08-08 12:29:27,248 ERROR basehttp "GET /news/138/ HTTP/1.1" 500 85622
+

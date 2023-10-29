@@ -1,0 +1,99 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% load cache %} <!-- Загружаем кэширование -->
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+
+{% if user.username %}
+    Пользователь : {{ user.username }}.
+
+    {% if is_not_authors %}
+        <button> <a href="{% url 'become_author' %}"> Стать автором!</a> </button>
+    {% else %}
+        Вы являетесь автором
+    {% endif %}
+
+{% else %}
+    <p>Пользователь не авторизирован: {{ user.username }} <a href="/accounts/login/">Войти</a></p>
+{% endif %}
+
+<h1>Список постов </h1>
+    {% if news %}
+        <table>
+            <tr>
+                <td>
+                    Дата
+                </td>
+                <td>
+                    Тип
+                </td>
+                <td>
+                    Заголовок
+                </td>
+                <td>
+                    Содержание
+                </td>
+            </tr>
+            {% for new in news %}
+            <tr>
+                <td>
+                    {{ new.datatime | date:'d M Y' }}
+                </td>
+                <td>
+                    {{ new.post}}
+                </td>
+                <td>
+                    <a href="{% url 'new' new.id %}">{{ new.title | truncatechars:25 | censor }}</a>
+                   
+                    {% if is_not_authors %}
+                    {% else %}
+                        <a class = edit href="{% url 'new_edit' new.id %}"><u>Редактировать</u></a> 
+                        <a class = edit href="{% url 'new_delete' new.id %}"><u> Удалить </u></a> 
+                    {% endif %}
+                    
+
+                </td>
+                <td>
+                    {{ new.text | truncatechars:50 | censor}}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+            {% if is_not_authors %}
+            {% else %}
+                <a href="{% url 'add' %}">Добавить новый пост</a>
+            {% endif %}
+        <br>
+
+        {% cache 30 header %}
+            {% if is_paginated %}
+            
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+                {% endif %}
+            
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a>{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">>>></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            
+            {% endif %}
+        {% endcache %}
+        
+    {% endif %}
+{% endblock content %}

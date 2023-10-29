@@ -1,0 +1,48 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Категория
+{% endblock title %}
+ 
+{% block content %}
+
+<h1>Новости категории {{category.NameCategory}} </h1>
+{% if user.username %}
+    {% if user not in subscribers %}
+        <p>{{ user.username }}, хотите подписаться на категорию {{category.NameCategory}}? <button><a href = "{% url 'subscribe' category.id  %}">Подписаться!</a></button> </p>>   
+    {% else %}
+        <p>{{ user.username }}! Вы подписаны на категорию {{category.NameCategory}}. Отписаться? <button><a href = "{% url 'unsubscribe' category.id %}">Отписаться!</a></button></p>
+{% endif %}
+
+{% else %}
+    <p>Чтобы подписаться на категории, вам необходимо <a href="/accounts/login/">войти.</a></p>
+{% endif %}
+
+{% if category %} 
+    <table>
+        <tr>
+            <td>
+                Заголовок
+            </td>
+            <td>
+                Описание
+            </td>
+        </tr>
+        {% for news in category.post_set.all %}
+        <tr>
+            <td>
+                {{ news.title }}
+            </td>
+            <td>
+                {{ news.text }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% else %}
+    <h3>Новостей нет!</h3>
+{% endif %}
+
+{% endblock content %}
